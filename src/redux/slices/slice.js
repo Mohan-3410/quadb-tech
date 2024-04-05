@@ -9,16 +9,16 @@ const tasksSlice = createSlice({
             let color;
             switch (priority) {
                 case 'high':
-                    color = 'red';
+                    color = '#f44336'; // Red
                     break;
                 case 'medium':
-                    color = 'orange';
+                    color = '#ff9800'; // Orange
                     break;
                 case 'low':
-                    color = 'green';
+                    color = '#4caf50'; // Green
                     break;
                 default:
-                    color = 'black';
+                    color = '#000000'; // Black
             }
             state.push({ name, completed: false, priority, color, dueDate });
         },

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
-
+import './TaskList.css'
 const TaskList = () => {
     const tasks = useSelector(state => state);
     const dispatch = useDispatch();
@@ -27,30 +27,26 @@ const TaskList = () => {
         }
     };
 
-
-
     return (
         <List className="task-list">
             {tasks.map((task, index) => (
-                <ListItem key={index} className="task">
+                <ListItem key={index} className="task" style={{ boxShadow: `2px 2px 4px ${task.color}` }}>
                     <Grid container alignItems="center" className="task-info">
-                        <Grid item>
+                        <Grid item xs={8}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
                                         checked={task.completed}
                                         onChange={() => dispatch(toggleTaskCompleted(index))}
                                         color="primary"
+                                        style={{ color: task.color }}
                                     />
                                 }
-                                label={
-                                    <Typography variant="body1">
-                                        {task.name} (Due: {task.dueDate || 'No due date'})
-                                    </Typography>
-                                }
+                                label={<Typography variant="body1">{task.name}</Typography>} // Move task name to Typography component
                             />
+                            <Typography variant="body2" color="textSecondary">{`Due: ${task.dueDate || 'No due date'}`}</Typography> {/* Add due date text with muted color */}
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={4}>
                             {editIndex === index ? (
                                 <TextField
                                     id={`edit-input-${index}`}
@@ -64,15 +60,15 @@ const TaskList = () => {
                     <ListItemSecondaryAction className="task-actions">
                         {editIndex === index ? (
                             <IconButton aria-label="save" onClick={() => handleSave(index)}>
-                                <SaveIcon />
+                                <SaveIcon style={{ color: task.color }} />
                             </IconButton>
                         ) : (
                             <IconButton aria-label="edit" onClick={() => handleEdit(index)}>
-                                <EditIcon />
+                                <EditIcon style={{ color: task.color }} />
                             </IconButton>
                         )}
                         <IconButton aria-label="delete" onClick={() => dispatch(deleteTask(index))}>
-                            <DeleteIcon />
+                            <DeleteIcon style={{ color: task.color }} />
                         </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>

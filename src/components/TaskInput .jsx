@@ -6,36 +6,56 @@ import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Grid } fr
 const TaskInput = () => {
     const [input, setInput] = useState("");
     const [priority, setPriority] = useState("low");
-    const [dueDate, setDueDate] = useState(null); // Ensure dueDate is initialized properly
+    const [dueDate, setDueDate] = useState(null);
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(addTask({ name: input, priority, dueDate }));
-        setInput(""); // Clear input field after submitting
+        setInput("");
     };
 
     return (
         <form className="add-task-form" onSubmit={handleSubmit}>
             <Grid container spacing={2} alignItems="center">
-                <Grid item>
-                    <TextField value={input} onChange={e => setInput(e.target.value)} placeholder="New task" />
+                <Grid item xs={12} sm={4}>
+                    <TextField
+                        fullWidth
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        label="New task"
+                        variant="outlined"
+                    />
                 </Grid>
-                <Grid item>
-                    <FormControl>
+                <Grid item xs={12} sm={3}>
+                    <FormControl fullWidth variant="outlined">
                         <InputLabel>Priority</InputLabel>
-                        <Select value={priority} onChange={e => setPriority(e.target.value)}>
+                        <Select
+                            value={priority}
+                            onChange={e => setPriority(e.target.value)}
+                            label="Priority"
+                        >
                             <MenuItem value="low">Low</MenuItem>
                             <MenuItem value="medium">Medium</MenuItem>
                             <MenuItem value="high">High</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
-                    <TextField type="date" value={dueDate || ''} onChange={e => setDueDate(e.target.value)} /> {/* Ensure dueDate is not null */}
+                <Grid item xs={12} sm={3}>
+                    <TextField
+                        fullWidth
+                        type="date"
+                        value={dueDate || ''}
+                        onChange={e => setDueDate(e.target.value)}
+                        label="Due Date"
+                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
+                    />
                 </Grid>
-                <Grid item>
-                    <Button type="submit">Add Task</Button>
+                <Grid item xs={12} sm={2}>
+                    <Button fullWidth type="submit" variant="contained" color="primary">
+                        Add
+                    </Button>
                 </Grid>
             </Grid>
         </form>
